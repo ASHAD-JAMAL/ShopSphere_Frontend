@@ -2,9 +2,11 @@ import React from "react";
 import loginIcons from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import { useState } from "react";
 import imageTobase64 from "../helpers/imageTobase64";
+import summaryApi from "../common";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +18,8 @@ const SignUp = () => {
     confirmPassword: "",
     profilepic: "",
   });
-
+  const navigate = useNavigate();
+  
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => {
@@ -36,11 +39,32 @@ const SignUp = () => {
       };
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("login details", data);
+
+    if (data.password === data.confirmPassword) {
+      const dataResponse = await fetch(summaryApi.SignUp.url, {
+        method: summaryApi.SignUp.method,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const dataApi = await dataResponse.json();
+
+      if (dataApi.success) {
+        toast.success(dataApi.message);
+        navigate("/login");
+      }
+
+      if (dataApi.error) {
+        toast.error(dataApi.message);
+      }
+    } else {
+      toast.error("Paasword do not match");
+    }
   };
-  console.log("login details", data);
 
   return (
     <section id="signup">
@@ -48,10 +72,7 @@ const SignUp = () => {
         <div className="bg-white p-5 py-5 w-full max-w-sm mx-auto">
           <div className="w-20 h-20 mx-auto relative overflow-hidden rounded-full">
             <div>
-              <img
-                src={data.profilepic || loginIcons}
-                alt="login icons"
-              />
+              <img src={data.profilepic || loginIcons} alt="login icons" />
             </div>
             <form>
               <label>
@@ -77,6 +98,7 @@ const SignUp = () => {
                   name="name"
                   value={data.name}
                   onChange={handleOnChange}
+                  required
                   className="w-full h-full outline-none bg-transparent"
                 />
               </div>
@@ -90,6 +112,7 @@ const SignUp = () => {
                   name="email"
                   value={data.email}
                   onChange={handleOnChange}
+                  required
                   className="w-full h-full outline-none bg-transparent"
                 />
               </div>
@@ -104,6 +127,7 @@ const SignUp = () => {
                   name="password"
                   value={data.password}
                   onChange={handleOnChange}
+                  required
                   className="w-full h-full outline-none bg-transparent"
                 />
                 <div
@@ -124,6 +148,7 @@ const SignUp = () => {
                   name="confirmPassword"
                   value={data.confirmPassword}
                   onChange={handleOnChange}
+                  required
                   className="w-full h-full outline-none bg-transparent"
                 />
                 <div
