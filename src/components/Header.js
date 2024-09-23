@@ -14,6 +14,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuDisplay, setMenuDisplay] = useState(false);
+  
   // ------------------------logout logic start------------------------
   const handleLogout = async () => {
     const fetchData = await fetch(summaryApi.logout_user.url, {
@@ -74,7 +75,8 @@ const Header = () => {
                   <nav>
                     <Link
                       to={"admin-pannel"}
-                      className="whitespace-nowrap hover:bg-slate-100 p-2"
+                      className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2"
+                      onClick={() => setMenuDisplay((preve) => !preve)}
                     >
                       Admin Pannel
                     </Link>

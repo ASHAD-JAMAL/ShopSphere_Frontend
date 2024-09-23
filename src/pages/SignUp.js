@@ -22,9 +22,9 @@ const SignUp = () => {
   
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => {
+    setData((preve) => {
       return {
-        ...prev,
+        ...preve,
         [name]: value,
       };
     });
@@ -34,9 +34,9 @@ const SignUp = () => {
     const file = e.target.files[0];
     const imagePic = await imageTobase64(file);
     
-    setData((prev) => {
+    setData((preve) => {
       return {
-        ...prev,
+        ...preve,
         profilepic: imagePic,
       };
     });
