@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import summaryApi from "../common";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
+import ROLE from "../common/role";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuDisplay, setMenuDisplay] = useState(false);
-  
+
   // ------------------------logout logic start------------------------
   const handleLogout = async () => {
     const fetchData = await fetch(summaryApi.logout_user.url, {
@@ -73,13 +74,15 @@ const Header = () => {
               {menuDisplay && (
                 <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shaddow-lg rounded">
                   <nav>
-                    <Link
-                      to={"admin-pannel"}
-                      className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2"
-                      onClick={() => setMenuDisplay((preve) => !preve)}
-                    >
-                      Admin Pannel
-                    </Link>
+                    {user?.role === ROLE.ADMIN && (
+                      <Link
+                        to={"admin-pannel"}
+                        className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2"
+                        onClick={() => setMenuDisplay((preve) => !preve)}
+                      >
+                        Admin Pannel
+                      </Link>
+                    )}
                   </nav>
                 </div>
               )}
