@@ -15,6 +15,7 @@ import image4Mobile from "../assest/banner/img4_mobile.jpg";
 import image5Mobile from "../assest/banner/img5_mobile.png";
 
 const BannerProduct = () => {
+
   const [currentImage, setCurrentImage] = useState(0);
 
   const desktopImages = [image1, imag2, image3, image4, image5];
@@ -38,6 +39,7 @@ const BannerProduct = () => {
     }
   };
 
+  
   useEffect(() => {
     const interval = setInterval(() => {
       if (desktopImages.length - 1 > currentImage) {

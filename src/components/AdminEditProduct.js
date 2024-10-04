@@ -9,6 +9,7 @@ import summaryApi from "../common";
 import { toast } from "react-toastify";
 
 const AdminEditProduct = ({ onClose, productData,fetchdata }) => {
+
   const [data, setData] = useState({
     ...productData,
     productName: productData?.productName,
@@ -157,6 +158,7 @@ const AdminEditProduct = ({ onClose, productData,fetchdata }) => {
               </div>
             </div>
           </label>
+          
           <div>
             {data?.productImage[0] ? (
               <div className="flex items-center gap-2">

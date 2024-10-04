@@ -5,6 +5,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import ROLE from "../common/role";
 
 function AdminPannel() {
+
   const user = useSelector((state) => state?.user?.user);
   const navigate = useNavigate();
 
@@ -19,6 +20,7 @@ function AdminPannel() {
       <aside className="bg-white min-h-full w-full max-w-60 customShadow">
         <div className="h-32 flex justify-center items-center flex-col">
           <div className="text-5xl cursor-pointer relative flex justify-center">
+            
             {user?.profilepic ? (
               <img
                 src={user?.profilepic}

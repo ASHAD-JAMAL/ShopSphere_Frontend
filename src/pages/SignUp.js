@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -41,6 +42,7 @@ const SignUp = () => {
       };
     });
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
