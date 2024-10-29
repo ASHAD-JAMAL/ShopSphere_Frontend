@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "./Logo";
 import { GrSearch } from "react-icons/gr";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -9,12 +9,14 @@ import summaryApi from "../common";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
 import ROLE from "../common/role";
+import Context from "../context";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuDisplay, setMenuDisplay] = useState(false);
+  const context = useContext(Context);
 
   // ------------------------logout logic start------------------------
   const handleLogout = async () => {
@@ -33,6 +35,8 @@ const Header = () => {
       toast.error(data.message);
     }
   };
+
+  console.log("context add to cart count", context);
   // ------------------------logout logic end-------------------------
 
   return (
@@ -57,7 +61,6 @@ const Header = () => {
 
           <div className="flex items-center gap-7">
             <div className="relative flex justify-center">
-
               {user?._id && (
                 <div
                   className="text-3xl cursor-pointer relative flex justify-center "
@@ -90,14 +93,18 @@ const Header = () => {
                 </div>
               )}
             </div>
-            <div className="text-3xl cursor-pointer relative">
-              <span>
-                <FaShoppingCart />
-              </span>
-              <div className="bg-[#f16565] text-white w-5 h-5 rounded-full flex items-center justify-center absolute -top-2 -right-3">
-                <p className="text-sm">0</p>
+            
+              {/* cart product count display on ui  */}
+            {user?._id && (
+              <div className="text-3xl cursor-pointer relative">
+                <span>
+                  <FaShoppingCart />
+                </span>
+                <div className="bg-[#f16565] text-white w-5 h-5 rounded-full flex items-center justify-center absolute -top-2 -right-3">
+                  <p className="text-sm">{context?.cartProductsCount}</p>
+                </div>
               </div>
-            </div>
+            )}
             <div>
               {user?._id ? (
                 <button

@@ -41,14 +41,26 @@ const summaryApi = {
     url: `${backendDomain}/api/get-categoryProduct`,
     method: "get",
   },
-  categoryWiseProduct:{
+  categoryWiseProduct: {
     url: `${backendDomain}/api/category-wise-product`,
     method: "post",
   },
-  productDetails:{
+  productDetails: {
     url: `${backendDomain}/api/product-details`,
     method: "post",
-  }
+  },
+  addToCartProduct: {
+    url: `${backendDomain}/api/add-to-cart`,
+    method: "post",
+  },
+  addToCartProductCount: {
+    url: `${backendDomain}/api/count-add-to-cart-product`,
+    method: "get",
+  },
+  addToCartProductView: {
+    url: `${backendDomain}/api/view-cart-product`,
+    method: "get",
+  },
 };
 
 export default summaryApi;

@@ -14,8 +14,7 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  
-  const { fetchUserDetails } = useContext(Context);
+  const { fetchUserDetails, fetchUserAddToCart } = useContext(Context);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -31,19 +30,20 @@ const Login = () => {
     e.preventDefault();
     const dataResponse = await fetch(summaryApi.signIn.url, {
       method: summaryApi.signIn.method,
-      credentials:"include",
+      credentials: "include",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(data),
     });
-    
+
     const dataApi = await dataResponse.json();
     console.log("dataApi", dataApi);
     if (dataApi.success) {
       toast.success(dataApi.message);
       navigate("/");
       fetchUserDetails();
+      fetchUserAddToCart();
       // localStorage.setItem("user-token",dataApi.data.token);
     }
     if (dataApi.error) {
