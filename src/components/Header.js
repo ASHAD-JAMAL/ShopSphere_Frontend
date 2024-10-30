@@ -93,17 +93,17 @@ const Header = () => {
                 </div>
               )}
             </div>
-            
-              {/* cart product count display on ui  */}
+
+            {/* cart product count display on ui  */}
             {user?._id && (
-              <div className="text-3xl cursor-pointer relative">
+              <Link to={"/cart"} className="text-3xl cursor-pointer relative">
                 <span>
                   <FaShoppingCart />
                 </span>
                 <div className="bg-[#f16565] text-white w-5 h-5 rounded-full flex items-center justify-center absolute -top-2 -right-3">
                   <p className="text-sm">{context?.cartProductsCount}</p>
                 </div>
-              </div>
+              </Link>
             )}
             <div>
               {user?._id ? (
