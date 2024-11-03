@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import summaryApi from "../common";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
 import displayINRCurrency from "../helpers/displayCurrency";
 import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay";
+import addToCart from "../helpers/addToCart";
+import Context from "../context";
 
 const ProductDetails = () => {
   const [data, setData] = useState({
@@ -28,7 +30,8 @@ const ProductDetails = () => {
   });
 
   const [zoomImage, setZoomImage] = useState(false);
-  console.log("product id", params);
+  const { fetchUserAddToCart } = useContext(Context);
+  const navigate = useNavigate();
 
   const fetchProductDetails = async () => {
     setLoading(true);
@@ -50,7 +53,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     fetchProductDetails();
-  }, []);
+  }, [params]);
 
   const handleMouseEnterProduct = (imageURL) => {
     setActiveImage(imageURL);
@@ -71,6 +74,17 @@ const ProductDetails = () => {
 
   const handleLeaveImageZoom = () => {
     setZoomImage(false);
+  };
+
+  const handleAddToCart = async (e, id) => {
+    await addToCart(e, id);
+    fetchUserAddToCart();
+  };
+
+  const handleBuyProduct = async (e, id) => {
+    await addToCart(e, id);
+    fetchUserAddToCart();
+    navigate("/cart");
   };
   return (
     <div className="container mx-auto p-4">
@@ -105,11 +119,11 @@ const ProductDetails = () => {
           <div className="h-full">
             {loading ? (
               <div className="flex gap-2 lg:flex-col overflow-scroll scrollbarNone h-full">
-                {productImageListLoading.map((el) => {
+                {productImageListLoading.map((el, index) => {
                   return (
                     <div
                       className="h-20 w-20 bg-slate-300 rounded animate-pulse"
-                      key={"loadingImage"}
+                      key={"loadingImage" + index}
                     ></div>
                   );
                 })}
@@ -193,10 +207,16 @@ const ProductDetails = () => {
 
             {/* button  */}
             <div className="flex items-center gap-3 my-2">
-              <button className="border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white transition-colors duration-300">
+              <button
+                className="border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white transition-colors duration-300"
+                onClick={(e) => handleBuyProduct(e, data._id)}
+              >
                 Buy
               </button>
-              <button className="border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-white bg-red-600 hover:text-red-600 hover:bg-white transition-colors duration-300">
+              <button
+                className="border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-white bg-red-600 hover:text-red-600 hover:bg-white transition-colors duration-300"
+                onClick={(e) => handleAddToCart(e, data._id)}
+              >
                 Add To Cart
               </button>
             </div>
