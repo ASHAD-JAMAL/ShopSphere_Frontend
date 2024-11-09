@@ -3,6 +3,7 @@ import summaryApi from "../common";
 import Context from "../context";
 import displayINRCurrency from "../helpers/displayCurrency";
 import { MdDelete } from "react-icons/md";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   const [data, setData] = useState([]);
@@ -86,6 +87,27 @@ const Cart = () => {
     if (responseData.success) {
       fetchData();
       context.fetchUserAddToCart();
+    }
+  };
+
+  const handlePayment = async () => {
+    const stripePromise = await loadStripe(
+      process.env.REACT_APP_STRIPE_PUBLIC_KEY
+    );
+    const response = await fetch(summaryApi.payment.url, {
+      method: summaryApi.payment.method,
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        cartItems: data,
+      }),
+    });
+    const responseData = await response.json();
+
+    if (responseData?.sessionId) {
+      stripePromise.redirectToCheckout({ sessionId: responseData.sessionId });
     }
   };
 
@@ -182,26 +204,31 @@ const Cart = () => {
         </div>
 
         {/* summary */}
-        <div className="mt-5 lg:mt-0 w-full max-w-sm">
-          {loading ? (
-            <div className="h-36 bg-slate-200 border-slate-300 animate-pulse"></div>
-          ) : (
-            <div className="h-36 bg-white">
-              <h2 className="text-white bg-red-600 px-4 py-1">summary</h2>
-              <div className="flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600">
-                <p>Quantity:</p>
-                <p>{totalQty}</p>
+        {data[0] && (
+          <div className="mt-5 lg:mt-0 w-full max-w-sm">
+            {loading ? (
+              <div className="h-36 bg-slate-200 border-slate-300 animate-pulse"></div>
+            ) : (
+              <div className="h-36 bg-white">
+                <h2 className="text-white bg-red-600 px-4 py-1">summary</h2>
+                <div className="flex items-center justify-between px-4 gap-2 font-medium text-lg text-slate-600">
+                  <p>Quantity:</p>
+                  <p>{totalQty}</p>
+                </div>
+                <div className="flex items-center justify-between p-4 gap-2 font-medium text-lg text-slate-600">
+                  <p>Total Price:</p>
+                  <p>{displayINRCurrency(totalPrice)}</p>
+                </div>
+                <button
+                  className="bg-blue-600 p-2 text-white w-full"
+                  onClick={handlePayment}
+                >
+                  Payment
+                </button>
               </div>
-              <div className="flex items-center justify-between p-4 gap-2 font-medium text-lg text-slate-600">
-                <p>Total Price:</p>
-                <p>{displayINRCurrency(totalPrice)}</p>
-              </div>
-              <button className="bg-blue-600 p-2 text-white w-full">
-                Payment
-              </button>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
