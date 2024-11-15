@@ -50,12 +50,10 @@ function App() {
         value={{
           fetchUserDetails, // user-details fetch
           cartProductsCount, //current user cart product count
-          fetchUserAddToCart
+          fetchUserAddToCart,
         }}
       >
-        <ToastContainer 
-          position="top-center"
-        />
+        <ToastContainer position="top-center" />
         <Header />
         <main className="min-h-[calc(100vh-120px)] pt-16">
           <Outlet />

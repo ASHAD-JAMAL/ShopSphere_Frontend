@@ -13,6 +13,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  
   const navigate = useNavigate();
   const { fetchUserDetails, fetchUserAddToCart } = useContext(Context);
 
