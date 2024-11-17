@@ -9,7 +9,8 @@ const addToCart = async (e, id) => {
     method: summaryApi.addToCartProduct.method,
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json", // Specify content type if necessary
+      Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
     },
     body: JSON.stringify({ productId: id }),
   });

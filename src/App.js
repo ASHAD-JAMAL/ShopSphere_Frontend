@@ -16,11 +16,15 @@ function App() {
   const fetchUserDetails = async () => {
     const dataResponse = await fetch(summaryApi.current_user.url, {
       method: summaryApi.current_user.method,
-      credentials: "include",
+      // credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
+      },
     });
 
     const dataApi = await dataResponse.json();
-
+    console.log("user details", dataApi.data);
     if (dataApi.success) {
       dispatch(setUserDetails(dataApi.data));
     }
@@ -29,7 +33,11 @@ function App() {
   const fetchUserAddToCart = async () => {
     const dataResponse = await fetch(summaryApi.addToCartProductCount.url, {
       method: summaryApi.addToCartProductCount.method,
-      credentials: "include",
+      // credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
+      },
     });
 
     const dataApi = await dataResponse.json();

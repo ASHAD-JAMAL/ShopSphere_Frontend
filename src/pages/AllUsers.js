@@ -18,7 +18,11 @@ const AllUsers = () => {
   const fetchAllUsers = async () => {
     const fetchData = await fetch(summaryApi.allUser.url, {
       method: summaryApi.allUser.method,
-      credentials: "include",
+      // credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
+      },
     });
 
     const dataResponse = await fetchData.json();

@@ -64,7 +64,8 @@ const AdminEditProduct = ({ onClose, productData, fetchdata }) => {
       method: summaryApi.updateProduct.method,
       credentials: "include",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
       },
       body: JSON.stringify(data),
     });

@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 import summaryApi from "../common";
 import { toast } from "react-toastify";
 
-const UploadProduct = ({ onClose,fetchData }) => {
+const UploadProduct = ({ onClose, fetchData }) => {
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -63,7 +63,8 @@ const UploadProduct = ({ onClose,fetchData }) => {
       method: summaryApi.uploadProduct.method,
       credentials: "include",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
       },
       body: JSON.stringify(data),
     });

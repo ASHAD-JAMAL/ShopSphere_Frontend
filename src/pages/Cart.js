@@ -16,7 +16,8 @@ const Cart = () => {
       method: summaryApi.addToCartProductView.method,
       credentials: "include",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
       },
     });
     const responseData = await response.json();
@@ -39,7 +40,8 @@ const Cart = () => {
       method: summaryApi.updateCartProducts.method,
       credentials: "include",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
       },
       body: JSON.stringify({
         _id: id,
@@ -58,7 +60,8 @@ const Cart = () => {
         method: summaryApi.updateCartProducts.method,
         credentials: "include",
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json", // Specify content type if necessary
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
         },
         body: JSON.stringify({
           _id: id,
@@ -77,7 +80,8 @@ const Cart = () => {
       method: summaryApi.deleteCartProduct.method,
       credentials: "include",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
       },
       body: JSON.stringify({
         _id: id,
@@ -98,7 +102,8 @@ const Cart = () => {
       method: summaryApi.payment.method,
       credentials: "include",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
       },
       body: JSON.stringify({
         cartItems: data,

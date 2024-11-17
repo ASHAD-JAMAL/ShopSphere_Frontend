@@ -16,9 +16,10 @@ const ChangeUserRole = ({ name, email, role, userId, onClose, callFunc }) => {
   const updateUserRole = async () => {
     const fetchResponse = await fetch(summaryApi.updateUser.url, {
       method: summaryApi.updateUser.method,
-      credentials: "include",
+      // credentials: "include",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json", // Specify content type if necessary
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Add the Authorization header with Bearer token
       },
       body: JSON.stringify({
         userId: userId,

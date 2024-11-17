@@ -13,7 +13,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  
+
   const navigate = useNavigate();
   const { fetchUserDetails, fetchUserAddToCart } = useContext(Context);
 
@@ -42,10 +42,10 @@ const Login = () => {
     console.log("dataApi", dataApi);
     if (dataApi.success) {
       toast.success(dataApi.message);
-      navigate("/");
+      localStorage.setItem("token", dataApi.data);
       fetchUserDetails();
       fetchUserAddToCart();
-      // localStorage.setItem("user-token",dataApi.data.token);
+      navigate("/");
     }
     if (dataApi.error) {
       toast.error(dataApi.message);
